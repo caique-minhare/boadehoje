@@ -12,21 +12,31 @@
                     :key="index"
                     v-for="(m, index) in markers"
                     :position="m.position"
-                    @click="center=m.position"
+                    @click="showModal"
             ></gmap-marker>
         </gmap-map>
+        <DetailBox
+            v-show="isModalVisible"
+            @close="closeModal">
+        </DetailBox>
     </div>
 </template>
 
 <script>
+    import DetailBox from "./baseTemplateDetailBox";
+
     export default {
         name: "GoogleMap",
+        components: {
+            DetailBox
+        },
         data() {
             return {
                 center: { lat: -20.464747, lng: -54.622017 },
                 markers: [],
                 places: [],
-                currentPlace: null
+                currentPlace: null,
+                isModalVisible: false
             };
         },
 
@@ -40,12 +50,20 @@
             setPlace(place) {
                 this.currentPlace = place;
             },
+            showModal(){
+                this.isModalVisible = true;
+            },
+            closeModal(){
+              this.isModalVisible = false;
+            },
             populateWithMarkers(){
-                const marker = {
-                    lat: -20.464517,
-                    lng: -54.610144
-                };
-                this.markers.push({position: marker})
+                for( var i = 0 ; i < 0.50 ; i += (Math.random()*0.01)){
+                    const marker = {
+                        lat: -20.464517 + (i*(Math.random()*2)),
+                        lng: -54.610144 + (i*(Math.random()*3))
+                    };
+                    this.markers.push({position: marker})
+                }
             },
             addMarker() {
                 if (this.currentPlace) {

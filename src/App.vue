@@ -6,11 +6,13 @@
 
 <script>
     import GoogleMap from "./components/baseTemplateGoogleMaps";
+    import DetailBox from "./components/baseTemplateDetailBox";
 
     export default {
         name: 'app',
         components: {
-            GoogleMap
+            GoogleMap,
+            DetailBox
         }
     }
 </script>
