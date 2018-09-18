@@ -3,7 +3,7 @@
         <div class="modal">
             <header class="modal-header">
                 <slot name="header">
-                    Qual a boa de hoje no Mercearia?
+                    Qual a boa de hoje no {{post.title}}?
                     <button
                             type="button"
                             class="btn-close"
@@ -15,10 +15,7 @@
             </header>
             <section class="modal-body">
                 <slot name="body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin risus turpis, <br/>
-                    blandit a metus vitae, dignissim sagittis neque. Curabitur condimentum viverra risus <br/>
-                    id hendrerit. Ut at finibus ex, ut pretium enim. Curabitur placerat tempus egestas. <br/>
-                    Etiam mollis auctor justo vel viverra. Nulla in malesuada tortor.
+                    {{post.body}}
                 </slot>
             </section>
             <footer class="modal-footer">
@@ -42,6 +39,7 @@
 <script>
     export default {
         name: "DetailBox",
+        props: ['post'],
         methods:{
             close(){
                 this.$emit('close')

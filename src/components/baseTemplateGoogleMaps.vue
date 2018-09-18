@@ -17,13 +17,16 @@
         </gmap-map>
         <DetailBox
             v-show="isModalVisible"
-            @close="closeModal">
+            @close="closeModal"
+            :post="posts[0]"
+            >
         </DetailBox>
     </div>
 </template>
 
 <script>
     import DetailBox from "./baseTemplateDetailBox";
+    import axios from 'axios';
 
     export default {
         name: "GoogleMap",
@@ -36,10 +39,28 @@
                 markers: [],
                 places: [],
                 currentPlace: null,
-                isModalVisible: false
+                isModalVisible: false,
+                posts: [],
+                errors: []
             };
         },
-
+        async created() {
+            try {
+                const response = await axios("http://jsonplaceholder.typicode.com/posts",{
+                method: 'GET',
+                    mode: 'no-cors',
+                    headers: {
+                    'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+                    credentials: 'same-origin',
+            })
+                this.posts = response.data
+            } catch (e) {
+                this.errors.push(e)
+            }
+        },
         mounted() {
             this.geolocate();
             this.populateWithMarkers();
